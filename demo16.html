@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>无缝滚动/定时滚动</title>
+	</head>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		ul{position: absolute;}
+		#big{position: relative;border: 1px black solid;margin: 50px 50px;width: 500px;height: 300px;overflow: hidden;}
+		#big1{position: relative;border: 1px black solid;margin: -350px 650px;width: 250px;height: 300px;overflow: hidden;}
+		ul li{float: left;width: 250px;height: 300px;list-style: none;}
+		img{width: 250px;height: 300px;}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			//无缝定时
+			var oDiv= document.getElementsByTagName('div')[0];
+			var oUl= document.getElementsByTagName('ul')[0];
+			var aLi= oUl.getElementsByTagName('li');
+			var timer=null;
+			var iSpeed=2;
+			oUl.innerHTML+=oUl.innerHTML;
+			oUl.style.width=aLi.length*aLi[0].offsetWidth+'px';
+			function scrollLR (){//滚动方法
+				var oWidth=oUl.offsetWidth/2;
+				oUl.style.left=oUl.offsetLeft+iSpeed+'px';
+				if(oUl.offsetLeft<=-oWidth){//向左滚动
+					oUl.style.left=0+'px';		
+				}else if(oUl.offsetLeft>0){//向右滚动
+					oUl.style.left=-oWidth+'px';
+				}
+			}
+			//调用滚动
+			timer=setInterval(scrollLR,30);
+			//移入移出停止
+			oUl.onmouseover=function(){
+				clearInterval(timer);
+			}
+			oUl.onmouseout=function(){
+				timer=setInterval(scrollLR,30);
+			}
+			
+			//--------------------------------------------------------------------
+			
+			//定时滚动
+			var oDiv1= document.getElementsByTagName('div')[1];
+			var oUl1= document.getElementsByTagName('ul')[1];
+			var aLi1= oUl1.getElementsByTagName('li');
+			var timer1=null;
+			var times=1;//变换次数
+			oUl1.style.width=aLi1.length*aLi1[0].offsetWidth+'px';
+			function scrollTimes (){
+				oUl1.style.left=aLi1[0].offsetWidth * -times+'px';
+				if(times%aLi1.length==0){
+					times=0;//重置变换次数
+					oUl1.style.left=0+"px";
+				};
+				times++;
+			}
+			
+			//调用滚动
+			timer1 =setInterval(scrollTimes,3000);
+			//移入移出停止
+			oUl1.onmouseover=function(){
+				clearInterval(timer1);
+			}
+			oUl1.onmouseout=function(){
+				timer1=setInterval(scrollTimes,3000);
+			}
+		}
+	</script>
+	<body>
+		<!--无缝滚动-->
+		<div id="big">
+			<ul>
+				<li><img src="img/1.png"/></li>
+				<li><img src="img/2.png"/></li>
+				<li><img src="img/3.png"/></li>
+				<li><img src="img/4.png"/></li>
+			</ul>
+		</div>
+		
+		<!--定时滚动-->
+		<div id="big1">
+			<ul>
+				<li><img src="img/1.png"/></li>
+				<li><img src="img/2.png"/></li>
+				<li><img src="img/3.png"/></li>
+				<li><img src="img/4.png"/></li>
+			</ul>
+		</div>
+	</body>
+</html>

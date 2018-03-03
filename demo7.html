@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>字符串方法</title>
+		<link rel="stylesheet" type="text/css" href="css/default.css"/>
+		<style type="text/css">
+			#big{position: relative;width: 470px;height: 350px;margin-left: 35%;}
+			#mess{width: 400px;height: 250px;margin-top: 30px;border: gainsboro 10px solid;font-family: "微软雅黑";}
+			#oper{width: 400px;height: 60px;border: darkgrey 5px solid;margin-left: 5px;}	
+			#replace,#serch{margin: 0 auto;}
+			.active{display: none;}
+		</style>
+		
+		<script type="text/javascript">
+			window.onload=function(){
+				var data=[
+					{id:1,name:'小咩',sex:'女'},
+					{id:2,name:'小强',sex:'男'},
+					{id:3,name:'小芳',sex:'女'},
+					{id:4,name:'小华',sex:'男'}
+				]
+				
+				var oTable=document.getElementsByTagName('table')[0];
+				var oBody=oTable.getElementsByTagName('thead')[0];
+				
+				for(var i=0; i<data.length;i++){
+					var oTr=document.createElement('tr');
+					var oTd=document.createElement('td');
+					if(i%2!=0){
+						oTr.style.background='lightgray';
+					}
+					oBody.appendChild(oTr);
+					oTr.appendChild(oTd);
+					oTd.innerHTML=data[i].id;
+					
+					oTd=document.createElement('td');
+					oTr.appendChild(oTd);
+					oTd.innerHTML=data[i].name;
+					
+					oTd=document.createElement('td');
+					oTr.appendChild(oTd);
+					oTd.innerHTML=data[i].sex;
+					
+					oTd=document.createElement('td');
+					oTr.appendChild(oTd);
+					var oA=document.createElement('a');
+					oA.innerHTML='删除';
+					oA.href='javascript:;';
+					oA.onclick=function(){
+						oBody.removeChild(this.parentNode.parentNode);
+						for(var i=0;i<oBody.rows.length;i++){
+							if(i%2==0){
+								oBody.rows[i].style.background='lightgray';
+							}else{
+								oBody.rows[i].style.background='white';
+							}
+						}
+					}
+					oTd.appendChild(oA);
+					
+					
+					
+					
+				}
+				
+			}
+		</script>
+		
+	</head>
+	<body>
+		<table border="1px" width="300px">
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+			</tbody>
+		</table>
+	</body>
+</html>

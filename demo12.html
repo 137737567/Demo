@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>缓冲运动</title>
+	</head>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv= document.getElementsByTagName('div')[0];
+			oDiv.style.top=(document.documentElement.clientHeight - oDiv.offsetHeight)/2+"px";
+			
+		}
+		window.onscroll=function(){
+			var oDiv= document.getElementsByTagName('div')[0];
+			var scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
+			var t= scrollTop+(document.documentElement.clientHeight - oDiv.offsetHeight)/2;
+			move(Math.floor(t));
+			
+		}
+	
+		
+		var timer=null;
+		function move(iTarget){
+			var oDiv= document.getElementsByTagName('div')[0];
+			clearInterval(timer);
+			timer=setInterval(function(){
+				var iSpeed=(iTarget - oDiv.offsetTop)/20;
+				iSpeed =iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+				if(iTarget == oDiv.offsetTop){
+					clearInterval(timer);   
+				}else{
+					oDiv.style.top = oDiv.offsetTop + iSpeed+'px';
+				}
+				
+			},10);
+		}
+	</script>
+	<body style="height: 2000px;">
+		<div style="position: absolute;right: 0;height: 110px;width: 100px;background: red;">
+			
+		</div>
+	</body>
+</html>

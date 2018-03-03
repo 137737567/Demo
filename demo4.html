@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>修改框</title>
+	</head>
+	<style type="text/css">
+		.change{display: none;}
+	</style>
+	
+	<script type="text/javascript">
+		window.onload=function(){
+			var oUl=document.getElementsByTagName('ul')[0];
+			var aLi=oUl.getElementsByTagName('li');
+			for (var i=0;i<aLi.length;i++) {
+				text1(aLi[i]);
+			}
+			
+			function text1(oLi){
+				var mess=oLi.getElementsByTagName('input')[0];
+				var change=oLi.getElementsByTagName('input')[1];
+				var save=oLi.getElementsByTagName('input')[2];
+				var cancel=oLi.getElementsByTagName('input')[3];
+			
+				change.onclick=function(){
+					mess.readOnly=false;
+					change.style.display='none';
+					save.style.display='inline';
+					cancel.style.display='inline';
+				}
+					
+				save.onclick=function(){
+					mess.readOnly=true;
+					save.style.display='none';
+					cancel.style.display='none';
+					change.style.display='inline';
+				}
+				
+				cancel.onclick=function(){
+					mess.readOnly=true;
+					change.style.display='none';
+					save.style.display='none';
+					cancel.style.display='none';
+					change.style.display='inline';
+				}
+			}
+		}
+	</script>
+	<body>
+		<ul>
+			<li>
+				<input type="text" readonly="readonly" value="哈哈哈哈" />
+				<input type="button" value="修改" />
+				<input type="button" class="change" value="保存" />
+				<input type="button"class="change" value="取消" />
+			</li>
+			<li>
+				<input type="text" readonly="readonly" value="嘿嘿" />
+				<input type="button" value="修改" />
+				<input type="button" class="change" value="保存" />
+				<input type="button"class="change" value="取消" />
+			</li>
+			<li>
+				<input type="text" readonly="readonly" value="啦啦啦啦啦" />
+				<input type="button" value="修改" />
+				<input type="button" class="change" value="保存" />
+				<input type="button"class="change" value="取消" />
+			</li>
+		</ul>
+	</body>
+</html>

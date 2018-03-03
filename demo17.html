@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>弹性运动框架</title>
+	</head>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		ul{position: relative;height: 37px;width:288px;margin: 50px auto;}
+		li{position: relative;float: left;height: 35px;width:70px;border-radius:3px ;border:black 1px solid;
+		font-weight: bold;line-height: 35px;text-align: center; list-style: none;}
+		#bg{position: absolute;background:red;filter:alpha(opacity:30);opacity: 0.3;float: left;height: 35px;
+		width:70px;z-index: 1;}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var aLi=document.getElementsByTagName('li');
+			var bg=aLi[4];
+			var iSpeed=0;
+			var left=0;//减少小数误差
+			
+			//调用弹性运动框架
+			for(var i=0; i<aLi.length-1;i++){
+				aLi[i].onmouseover=function(){
+					elasticMove(bg,this.offsetLeft);
+				}
+			}
+			
+			//弹性运动框架
+			function elasticMove(obj,iTarget){
+				clearInterval(obj.timer);
+				obj.timer=setInterval(function(){
+					iSpeed+=(iTarget-obj.offsetLeft)/5;
+					iSpeed*=0.7;
+					left+=iSpeed;//减少小数误差
+					if(Math.abs(iTarget-obj.offsetLeft)<1 && Math.abs(iSpeed)<1){//结束判断
+						clearInterval(obj.timer);
+						obj.style.left=iTarget+'px';
+					}else{
+						obj.style.left=left+'px';
+					}
+				},30);
+			};
+		}
+	</script>
+	<body>
+		<ul>
+			<li>首页</li>
+			<li>生活区</li>
+			<li>舞蹈区</li>
+			<li>鬼畜区</li>
+			<li id="bg"></li>
+		</ul>
+	</body>
+</html>

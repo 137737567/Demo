@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>模拟环境菜单</title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="css/default.css"/>;
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv=document.getElementsByTagName('div')[0];
+			document.oncontextmenu=function(eve){
+				var eve=eve||event;
+				oDiv.style.display='block';
+				oDiv.style.left=eve.clientX+'px';				
+				oDiv.style.top=eve.clientY+'px';
+				return false;//取消默认行为
+			}
+		document.onclick=function(){
+			oDiv.style.display='none';
+		}
+			
+		}
+	</script>
+	<body>
+		<div style="border: 1px solid black;height: 150px; width: 50px; position: absolute;display: none;" >
+			<ul>
+				<li>复制</li>
+				<li>粘贴</li>
+			</ul>
+		</div>
+	</body>
+</html>

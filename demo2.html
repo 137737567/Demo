@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>qq列表模拟</title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="css/default.css"/>
+	<style type="text/css">
+		
+		
+		#big{width: 150px;height:auto;list-style: none;border: 1px black solid;margin: 50px;}
+		.ul1 li{font-size: 14px;width: auto;line-height: 30px;height: 30px;list-style: none;
+			border-bottom: 1px black solid;padding-left:10px;}
+		.ul1{display:none;}
+		h2{height: 30px;line-height: 30px;background-color: gray;border: 1px black solid;
+			font-size: 16px;padding-left: 10px;background: orange url(img/ico2.gif) no-repeat left center;}
+		.active{background: orange url(img/ico1.gif) no-repeat left center;}
+		.active1{background: lightgray;}
+	
+	
+	</style>
+	
+	<script type="text/javascript">
+		window.onload=function(){
+			var aH2 =document.getElementsByTagName('h2');
+			var aUl =document.getElementsByClassName('ul1');
+			var aLi=null;
+			var arrLi=[];
+			
+			for(var i =0;i<aH2.length;i++){
+				aH2[i].index=i;
+				aH2[i].onclick=function(){
+					if(this.className==''){
+						//限制同时打开一个分组
+						for (var i =0;i<aH2.length;i++) {
+							aH2[i].className='';
+							aUl[i].style.display='none';
+						}
+						//打开
+						aH2[this.index].className='active';
+						aUl[this.index].style.display='block';
+					}else{
+						//关闭
+						aH2[this.index].className='';
+						aUl[this.index].style.display='none';
+					}
+				}		
+			}
+			for(var i =0;i<aH2.length;i++){
+				aLi=aUl[i].getElementsByTagName('li');
+				for(var j =0;j<aLi.length;j++){
+					arrLi.push(aLi[j]);
+				}
+			}
+			for (var i =0;i<arrLi.length;i++) {	
+				arrLi[i].onclick=function(){
+					for (var i =0;i<arrLi.length;i++) {
+						arrLi[i].className='';
+					}
+					if(this.className==''){
+						this.className='active1';
+					}else{
+						this.className='';
+					}
+				}
+			}
+		}
+		
+	</script>
+	
+	<body>
+		<ul id="big">
+			<h2>同学</h2>
+			<li>
+				<ul class='ul1'>
+					<li>123123</li>
+					<li>12213</li>
+					<li>132</li>
+					<li>123123</li>
+				</ul>
+			</li>
+			
+			<h2>同事</h2>
+			<li>
+				<ul class='ul1'>
+					<li>13232113</li>
+					<li></li>
+					<li>12313</li>
+					<li></li>
+				</ul>
+			</li>
+			
+			<h2>家人</h2>
+			<li>
+				<ul class='ul1'>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</li>
+		</ul>			
+	</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>多物体淡入淡出</title>
+	</head>
+	<style type="text/css">
+		div{float: left;margin:50px 5px;background:red;height: 35px;width:70px;color: white;border-radius:3px ;
+		filter:alpha(opacity:30);opacity: 0.3;font-weight: bold;line-height: 35px;text-align: center;}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var aDiv=document.getElementsByTagName('div');
+			for(var i =0; i<aDiv.length;i++){
+				aDiv[i].alpha=30;
+				aDiv[i].onmouseover=function(){
+					alphaChange(this,100);
+				}
+				aDiv[i].onmouseout=function(){
+					alphaChange(this,30);
+				}
+			}
+			
+			function alphaChange(obj,iTarget){
+				clearInterval(obj.timer);
+				obj.timer= setInterval(function(){
+					iSpeed= (iTarget - obj.alpha)/8;
+					iSpeed =iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+					if(iTarget == obj.alpha){
+						clearInterval(obj.timer);
+					}else{
+						obj.alpha+=iSpeed;
+						obj.style.filter = 'alpha(opacity:'+obj.alpha+')';
+						obj.style.opacity=obj.alpha/100;
+					}
+				},30);
+				
+				
+			}
+		}
+	</script>
+	<body>
+		<div>
+			首页
+		</div>
+		<div>
+			生活区
+		</div>
+		<div>
+			舞蹈区
+		</div>
+		<div>音乐区
+		</div>
+		<div>
+			鬼畜区
+		</div>
+	</body>
+</html>

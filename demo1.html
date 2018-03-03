@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图片切换</title>
+	</head>
+	
+	<style type="text/css">
+		#big{margin: 40px; width: 300px;height: 400px;position: relative;
+			background-image: url(img/loader_ico.gif) no-repeat;background-size: cover;border: 1px solid black;}
+		span{position: absolute;top: 0;width: 300px;height: 30px;line-height: 30px;
+			font-size: 16px;text-align: center;background: black;color: white;}
+		ul{position: absolute;bottom: -16px;width: 260px;height: 35px;background: black; float: left;}
+		ul li{float: left; width: 30px; height: 30px;list-style: none;
+			background: white;text-align: center;line-height: 30px; margin:2px 12px 2px ;}
+		.active{background: orange;}
+	</style>
+	
+	<script type="text/javascript">
+		window.onload=function(){
+			//获取元素
+			var oPic =document.getElementById('big');
+			var oSpan=document.getElementsByTagName('span')[0];
+			var oUl=document.getElementsByTagName('ul')[0];
+			var aLi=oUl.getElementsByTagName('li');
+			var aUrl=['img/1.png','img/2.png','img/3.png','img/4.png']
+			var num=0;
+						
+			for(var i=0; i<aUrl.length;i++){
+				oUl.innerHTML+='<li></li>';
+			}
+			
+			function add(){
+				oPic.style.backgroundImage='url('+aUrl[num]+')';
+				oSpan.innerText=num+1+'/'+aUrl.length;
+				for(var i=0; i<aUrl.length;i++){
+					aLi[i].index1=i+1;
+					aLi[i].innerHTML=aLi[i].index1;
+					aLi[i].className='';
+				}		
+				aLi[num].className='active';
+			}
+			
+			add();
+			
+			for (var i=0;i<aUrl.length;i++) {
+				aLi[i].index = i;
+				aLi[i].onclick=function (){
+					num=this.index;	
+					add();
+				}
+			}			
+		}
+	</script>
+	
+	<body>
+		<div id="big">
+			<span>
+				1/4
+			</span>
+			<ul>
+				<li>1</li>	
+				<li>1</li>
+				<li>1</li>
+				<li>1</li>
+			</ul>
+		</div>
+	</body>
+</html>

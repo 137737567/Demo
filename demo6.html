@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>移动</title>
+		<link rel="stylesheet" type="text/css" href="css/default.css"/>
+	</head>
+	
+	<style type="text/css">
+		div{position: relative;width: 210px;height: 300px;margin: 100px;overflow: hidden;border: 2px solid black;}
+		img{position:absolute;width: 200px;height: 300px;}
+		.active{display: none;}
+		
+	</style>
+	
+	<script type="text/javascript">
+		window.onload=function(){
+			var aUrl=['1.png','2.png','3.png','4.png'];
+			var oImg=document.getElementsByTagName('img')[0];
+			var btn=document.getElementsByTagName('input')[0];
+			var oImg1=document.getElementsByTagName('img')[1];
+			var width1=200;
+			
+			
+			
+			btn.onclick=function(){
+//				var current=0;
+//				var timer=null;
+//				clearInterval(timer);
+//				timer=setInterval(function(){
+//					oImg.style.right=current+'px';
+//					current=current+(width1-current)/20;
+//					if(current>=195){
+//						oImg.style.display='none';
+//						clearInterval(timer);
+//					}
+//				}
+//				,20)
+				moveR();
+				
+			}
+			function moveR(){
+				var timer=null;
+				oImg1.style.left=width1+'px';
+				oImg1.style.display='inline';
+				var current=0;
+				clearInterval(timer);
+				timer=setInterval(function(){
+					current=width1-(width1-current)/40;
+					alert(current);
+					oImg1.style.left=current+'px';
+					if(current<1){
+						oImg1.style.display='none';
+						clearInterval(timer);
+					}
+				}
+				,40)
+			}
+			
+		}
+		
+	</script>
+	
+	<body>
+		<div id="">
+			<img id="img1" src="img/1.png"/>
+			<img id="img2" class="active" src="img/2.png"/>
+		</div>
+		<input type="button" value="移动" />
+	</body>
+</html>

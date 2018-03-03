@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>键盘事件</title>
+	</head>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv=document.getElementsByTagName('div')[0];
+			var left,top,right,btm;
+			
+			document.onkeydown=function(eve){
+				var eve =eve || event;
+				switch(eve.keyCode){
+					case 37:
+						left=true;
+						break;
+					case 38:
+						top=true;
+						break;
+					case 39:
+						right=true;
+						break;
+					case 40:
+						btm=true;
+						break;
+				}	
+			}
+			//优化停顿间隔
+			setInterval(function(){
+				if(left){
+					oDiv.style.left=oDiv.offsetLeft- 10+'px';
+				}
+				if(top){
+					oDiv.style.top=oDiv.offsetTop- 10+'px';
+				}
+				if(right){
+					oDiv.style.left=oDiv.offsetLeft+ 10+'px';
+				}
+				if(btm){
+					oDiv.style.top=oDiv.offsetTop+ 10+'px';
+				}
+			},20);
+
+			document.onkeyup=function(eve){
+				var eve =eve || event;
+				switch(eve.keyCode){
+					case 37:
+						left=false;
+						break;
+					case 38:
+						top=false;
+						break;
+					case 39:
+						right=false;
+						break;
+					case 40:
+						btm=false;
+						break;
+				}	
+			}
+		}
+	</script>
+	<body>
+		<div style="border: 1px solid black;height: 30px; width: 30px; position: absolute;" >
+			
+		</div>
+	</body>
+</html>

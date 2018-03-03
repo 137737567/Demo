@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>移动方块/图片封装+限制范围+左侧磁性吸附+碰撞检测 +拖曳改变大小</title>
+	</head>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv=document.getElementsByTagName('div')[0];
+			var oDiv1=document.getElementsByTagName('div')[1];
+			var oImg=document.getElementsByTagName('img')[0];
+			//drag(oDiv);
+			drag(oDiv,oImg);
+			
+			function drag(obj,obj1){//Obj1为被碰撞物体
+				obj.onmousedown=function(eve){
+					var eve=eve || event;
+					//全局捕获
+					if(obj.setCapture){
+						obj.setCapture();
+					}
+					var disX=eve.clientX-this.offsetLeft;
+					var disY=eve.clientY-this.offsetTop;
+					document.onmousemove=function(eve){
+						var eve=eve || event;
+						//限制范围
+						var L=eve.clientX-disX;
+						var T=eve.clientY-disY;
+						if(L<50){
+							L=0;
+						}else if(L>document.documentElement.clientWidth-obj.offsetWidth){
+							L=document.documentElement.clientWidtht-obj.offsetWidth;
+						}
+						if(T<0){
+							T=0;
+						}else if(T>document.documentElement.clientHeight-obj.offsetHeight){
+							T=document.documentElement.clientHeight-obj.offsetHeight;
+						}
+						
+						//碰撞检测
+						var L1 =L;
+						var T1 =T;
+						var R1 =L + obj.offsetWidth;
+						var B1 =T + obj.offsetHeight;
+						
+						var L2 =obj1.offsetLeft;
+						var T2 =obj1.offsetTop;
+						var R2 =L2 + obj1.offsetWidth;
+						var B2 =T2 + obj1.offsetHeight;
+						
+						if(R1 < L2+1 || R2-1 < L1 || T1 > B2-1 || B1 < T2+1 ){
+							//未发生碰撞
+						}else{
+							alert('撞上了!');
+						}
+						
+						obj.style.left=L +'px';
+						obj.style.top=T +'px';
+					}
+					document.onmouseup=function(){
+						document.onmousemove=document.onmouseup=null;
+						//取消全局捕获
+						if(obj.releaseCapture){
+							obj.releaseCapture();
+						}
+					}
+					return false;
+				}
+			}
+			
+			dragSize(oDiv1);//拖曳改变大小
+			function dragSize(obj){
+				obj.onmousedown=function(eve){
+					var side;
+					var cliX =eve.clientX;
+					var cliWidth=obj.offsetWidth;
+					var eve=eve || event;
+					if(eve.clientX >obj.offsetLeft + obj.offsetWidth -10){
+						side='right';
+					}else if(eve.clientX <obj.offsetLeft +10){
+						side='left';
+					}
+					document.onmousemove=function(eve){
+						var eve=eve || event;
+						switch(side){
+							case 'left':
+								obj.style.width=cliWidth-(eve.clientX-cliX)+'px';
+								obj.style.left=eve.clientX-cliX+'px';
+								if(obj.offsetWidth<20){
+									obj.style.width=20+'px';
+								}
+								break;
+							case 'right':
+								obj.style.width=cliWidth+(eve.clientX-cliX)+'px';
+								if(obj.offsetWidth<20){
+									obj.style.width=20+'px';
+								}
+							break;
+						} 
+						
+					}
+					document.onmouseup=function(){
+						document.onmousemove=document.onmouseup=null; 
+					}
+					return false;
+				}
+			}
+			
+		}
+	</script>
+	<body>
+		<div style="border: 1px solid black;height: 100px; width: 100px;background: green; position: absolute;" >
+		拖动
+		</div>
+		
+		<img src="img/3.png" style="height: 200px; width: 200px; margin:100px 500px;"/ >
+		<div style="border: 1px solid black;height: 100px; width: 100px;margin:50px 400px;background: red; position: absolute;overflow: hidden;" >
+			拖动右边框改变大小
+		</div>
+		<div style="border: 1px solid black;height: 600px; width: 1px;background: green; position: absolute; left: 0px;top: 0px;" >
+		吸附区
+		</div>
+	</body>
+</html>

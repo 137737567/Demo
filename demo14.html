@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>完美运动框架</title>
+	</head>
+	<style type="text/css">
+		div{margin:10px 5px;background:red;height: 35px;width:70px;color: white;border-radius:3px ;
+		filter:alpha(opacity:20);opacity: 0.2;font-weight: bold;line-height: 35px;text-align: center;}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var aDiv=document.getElementsByTagName('div');
+			aDiv[0].onmouseover =function(){
+				//完美运动框架
+				startMove(this,{'height':150,'width':150,'font-size':30,'opacity':50},function(){
+					startMove(aDiv[0],{'opacity':100});
+				});
+			}
+			aDiv[0].onmouseout =function(){
+				//完美运动框架
+				startMove(this,{'height':35,'width':70,'font-size':12,'opacity':50},function(){
+					startMove(aDiv[0],{'opacity':20});
+				});
+			}
+			aDiv[1].onclick =function(){
+				//链式运动框架
+				startMove1(this,{'width':200},function(){
+					alert('1');
+					startMove1(aDiv[1],{'height':200});
+				});
+			}
+			aDiv[2].onclick =function(){
+				//改变字体大小
+				startMove(this,'font-size',30);
+			}
+			aDiv[3].onclick =function(){
+				//改变透明度
+				startMove(this,'opacity',100);
+			}
+			
+			function startMove(obj,json,fun){
+				clearInterval(obj.timer);
+				var j =0;
+				obj.timer= setInterval(function(){
+					var bStop =true;
+					for(var attr in json){
+						var iCur=null;
+						//attr获取值
+						if(attr=='opacity'){
+							iCur=Math.round(parseFloat(getStyle(obj,attr)*100));
+						}else{
+							iCur=parseInt(getStyle(obj,attr));
+						}
+						//计算速度
+						var iSpeed= (json[attr] - iCur)/8;
+						iSpeed =iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+						//未全部完成运动
+						document.getElementsByTagName('input')[0].value=json[attr]+'/'+iCur+'/'+j++;
+						if(iCur!= json[attr]){
+							bStop= false;
+						}
+						
+						if(attr=='opacity'){
+							obj.style.opacity=(iSpeed+iCur)/100;
+							obj.style.filter='alpha(opacity:'+(iSpeed+iCur)+')';
+						}else{
+							obj.style[attr] = iCur + iSpeed +'px';
+						}	
+					}
+					//全部运动完成
+					if(bStop){
+						clearInterval(obj.timer);
+						if(fun){
+							fun();
+						}	
+					}
+				},40);
+			}
+			
+	
+			//链式运动框架
+			function startMove1(obj,json,fun){
+				clearInterval(obj.timer);
+				obj.timer= setInterval(function(){
+					for(var attr in json){
+						var iCur=null;
+						if(attr=='opacity'){
+							iCur=Math.round(parseFloat(getStyle(obj,attr)*100));
+						}else{
+							iCur=parseInt(getStyle(obj,attr));
+						}
+						
+						var iSpeed= (json[attr] - iCur)/8;
+						iSpeed =iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+						//为全部完成运动
+						document.getElementsByTagName('input')[0].value=json[attr]+'/'+iCur;
+						if(iCur == json[attr]){
+							clearInterval(obj.timer);
+							if(fun){
+								fun();
+							}	
+						}else{
+							if(attr=='opacity'){
+								obj.style.opacity=(iSpeed+iCur)/100;
+								obj.style.filter='alpha(opacity:'+(iSpeed+iCur)+')';
+							}else{
+								obj.style[attr] = iCur + iSpeed +'px';
+							}
+						}	
+					}
+				},40);
+			}
+			//获取属性方法
+			function getStyle(obj,attr){
+				if(obj.currentStyle){
+					return obj.currentStyle[attr];
+				}else{
+					return getComputedStyle(obj,false)[attr];
+				}
+			}	   
+
+		}
+	</script>
+	<body>
+		<input type="text"/>
+		<div>
+			舞蹈区
+		</div>
+	</body>
+</html>

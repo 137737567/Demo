@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>布局转换和中心放大</title>
+	</head>
+	<style type="text/css">
+		*{margin:0;padding: 0;}
+		ul{margin:50px auto;position: relative;height: 338px; width: 546px;border: 1px black solid;}
+		ul li{margin: 10px;float: left;height: 90px; width: 160px;background: pink;border: 1px black solid;list-style: none;}
+	</style>
+	<script src="js/move.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		window.onload= function(){
+			var aLi=document.getElementsByTagName('li');
+			//float转换position布局
+			for(var i=0; i<aLi.length;i++){
+				aLi[i].style.left=aLi[i].offsetLeft+'px';
+				aLi[i].style.top=aLi[i].offsetTop+'px';//offset已包含margin
+			}
+			for(var i=0; i<aLi.length;i++){
+				aLi[i].style.position='absolute';
+				aLi[i].style.margin='0';
+			}
+			
+			//中心放大和缩放
+			var minzIndex =1;
+			for(var i=0; i<aLi.length;i++){
+				aLi[i].onmouseover=function(){
+					this.style.zIndex= minzIndex++;//使其在最高层级不被遮挡
+					//中心放大：marginLeft=(放大后Height-原来Height)/2
+					startMove(this,{height:135,width:240,marginLeft:-40,marginTop:-23});
+				};
+				aLi[i].onmouseout=function(){
+					startMove(this,{height:90,width:160,marginLeft:0,marginTop:0});
+				};
+			}
+			
+		};
+	</script>
+	<body>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</body>
+</html>

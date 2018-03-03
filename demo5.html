@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>定时器应用</title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="css/default.css"/>
+	<style type="text/css">
+		.up em{display:inline-block;background: deepskyblue;font-weight: bold;font-size: 16px;
+			height: 30px;line-height: 30px;text-align: center;width:60px;float: left;}
+		.detail{font-size: 14px; border: deepskyblue 1px solid;width:60px;border-radius: 3px;
+		display:none;float: left;margin-left:-61px;margin-top: 30px;}
+		a:hover{text-decoration: underline;}
+	
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var aUp=document.getElementsByClassName('up');
+			
+			
+			for (var i=0;i<aUp.length;i++) {
+				var oUp=aUp[i];
+				del(oUp);
+			}
+			
+			function del(oUp){
+				var timer;
+				var em =oUp.getElementsByTagName('em')[0];
+				var detail=oUp.getElementsByTagName('ul')[0];
+				em.onmouseover=function(){
+					clearInterval(timer);
+					em.style.background='gray';
+					detail.style.display='block';
+				}
+				em.onmouseout=function(){
+					em.style.background='deepskyblue';
+					timer=setTimeout(function(){
+						detail.style.display='none';	
+					},2000)
+				}
+				detail.onmouseover=function(){
+					clearInterval(timer);
+					detail.style.display='block';
+				}
+				detail.onmouseout=function(){
+					timer=setTimeout(function(){
+						detail.style.display='none';	
+					},2000)
+				}
+			}
+		}
+	</script>
+	<body>
+		<ul>
+			<li class="up">
+				<em>首页</em>
+				<ul class="detail">
+					<li><a href="">最新活动</a></li>
+					<li><a href="">报名</a></li>
+					<li><a href="">试听</a></li>
+					<li><a href="">联系方式</a></li>
+				</ul>
+			</li>
+			<li class="up">
+				<em>首页1</em>
+				<ul class="detail">
+					<li><a href="">最新活动</a></li>
+					<li><a href="">报名</a></li>
+					<li><a href="">试听</a></li>
+					<li><a href="">联系方式</a></li>
+				</ul>
+			</li>
+			<li class="up">
+				<em>首页2</em>
+				<ul class="detail">
+					<li><a href="">最新活动</a></li>
+					<li><a href="">报名</a></li>
+					<li><a href="">试听</a></li>
+					<li><a href="">联系方式</a></li>
+				</ul>
+			</li>
+		</ul>
+		
+	</body>
+</html>

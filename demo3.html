@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	
+	<script>
+		window.onload=function(){
+			var oUl=document.getElementById('list');
+			var aLi=oUl.getElementsByTagName('li');
+			var oNum1=oUl.getElementsByTagName('em')[0];
+			var oAll1=oUl.getElementsByTagName('em')[1];
+			var num1=parseInt(oNum1.innerHTML);
+			var all1=parseFloat(oAll1.innerHTML);
+			for (var i=0;i<aLi.length;i++) {
+				add(aLi[i]);
+			}
+			function add(oLi){
+				
+				var aBtn=oLi.getElementsByTagName('input');
+				var oNum=oLi.getElementsByTagName('strong')[0];
+				var oPer=oLi.getElementsByTagName('span')[0];
+				var oAll=oLi.getElementsByTagName('span')[1];
+				var num=parseInt(oNum.innerHTML);
+				var per=parseFloat(oPer.innerHTML);
+				
+				//alert(num1);
+				aBtn[1].onclick=function(){
+					oNum.innerHTML=num+=1;
+					oAll.innerHTML=per*num;
+					oNum1.innerHTML=num1+=1;
+					oAll1.innerHTML=all1+=per; 
+				}
+				aBtn[0].onclick=function(){
+					if(num<=0){
+						num=0;
+					}else if(num1<=0){
+						num1=0;
+					}else{
+						oNum.innerHTML=num-=1;
+						oAll.innerHTML=per*num;
+						oNum1.innerHTML-=1;
+						oNum1.innerHTML=num1-=1;
+						oAll1.innerHTML=all1-=per; 
+					}
+				}
+			}
+		}
+		
+	</script>
+	<body>
+		<ul id="list">
+			<li>	
+				<input type="button" value="-" />
+				<strong>0</strong>
+				<input type="button" value="+" />
+				单价：<span>10</span>元
+				总价：<span>0</span>元
+			</li>
+			<li>	
+				<input type="button" value="-" />
+				<strong>0</strong>
+				<input type="button" value="+" />
+				单价：<span>49</span>元
+				总价：<span>0</span>元
+			</li>
+			<li>	
+				<input type="button" value="-" />
+				<strong>0</strong>
+				<input type="button" value="+" />
+				单价：<span>16</span>元
+				总价：<span>0</span>元
+			</li>
+			<li>	
+				<input type="button" value="-" />
+				<strong>0</strong>
+				<input type="button" value="+" />
+				单价：<span>7.5</span>元
+				总价：<span>0</span>元
+			</li>
+			共<em>0</em>件商品，共<em>0</em>元！
+		</ul>
+	</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>拖拽+碰撞+重力</title>
+	</head>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		div{height: 61px;width: 61px;background:url(img/huaji.jpg) no-repeat;position: absolute;border-radius: 50%;}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv=document.getElementsByTagName('div')[0];
+			var oldX=0;//旧坐标用于计算速度
+			var oldY=0;
+			//拖曳运动
+			oDiv.onmousedown =function(ev){
+				var eve=ev || event;
+				var disX=eve.clientX-this.offsetLeft;
+				var disY=eve.clientY-this.offsetTop;
+				document.onmousemove=function(ev){
+					var eve=ev || event;
+					var l=eve.clientX-disX;
+					var t=eve.clientY-disY;
+					
+					//计算速度
+					iSpeedX =l-oldX;
+					iSpeedY =t-oldY; 
+					oldX=l; 
+					oldY=t; 
+					
+					oDiv.style.left=l+'px';
+					oDiv.style.top=t+'px';
+					
+				}
+				document.onmouseup=function(){
+					document.onmouseup=document.onmousemove=null;
+					impactMove();
+				}
+				clearInterval(timer);//防止冲突
+			}
+			
+		}
+		
+		//碰撞+重力运动
+		var iSpeedX=0;
+		var iSpeedY=0;
+		var timer=null;
+		function impactMove(){
+			clearInterval(timer);
+			timer=setInterval(function(){
+				var oDiv=document.getElementsByTagName('div')[0];//必须在定时器里
+				iSpeedY+=3;//重力加速度
+				var l=oDiv.offsetLeft+iSpeedX;
+				var t=oDiv.offsetTop+iSpeedY;
+				
+				if(l> document.documentElement.clientWidth -oDiv.offsetWidth){
+					iSpeedX*=-0.8;//改变方向并减速
+					l= document.documentElement.clientWidth -oDiv.offsetWidth;
+				}else if(l<0){
+					iSpeedX*=-0.8;
+					l=0;
+				}
+				if(t> document.documentElement.clientHeight -oDiv.offsetHeight){
+					iSpeedX*=0.8;
+					iSpeedY*=-0.8;
+					t= document.documentElement.clientHeight -oDiv.offsetHeight;
+				}else if(t<0){
+					iSpeedX*=0.8;
+					iSpeedY*=-1;
+					t=0;
+				}
+				if(Math.abs(iSpeedX)<1){
+					iSpeedX=0;
+				}
+				if(Math.abs(iSpeedY)<1){
+					iSpeedY=0;				}
+				//判断运动停止
+				if(iSpeedX==0 && iSpeedY==0 && t== document.documentElement.clientHeight -oDiv.offsetHeight){
+					clearInterval(timer);
+				}else{
+					oDiv.style.left=l+'px';
+					oDiv.style.top=t+'px';	
+				}
+				
+			},30);
+		}
+	</script>
+	<body>
+		<div>
+			
+		</div>
+	</body>
+</html>

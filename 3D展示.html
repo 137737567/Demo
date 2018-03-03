@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="css/default.css"/>;
+	<style type="text/css">
+		img{margin: 8% auto; display: block;}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var aImg = document.getElementsByTagName('img');
+			var oldImg = aImg[0];//设置第一个图片
+			var x=0;
+			var lastX=0;
+			var iSpeed=0;
+			var i=0;
+			var timer=null;
+			//添加所有图片
+			for(i;i<77;i++){
+				//预加载图片
+				(function(eImg){
+					var oImg = new Image;
+					oImg.onload=function(){
+						eImg.src = this.src;
+					}
+					oImg.src='img/img('+i+').jpg';
+					eImg.style.display='none';
+					document.body.appendChild(eImg);
+				})(document.createElement('img'))
+			}
+			document.onmousedown=function(ev){
+				var eve= ev||event;
+				var disX=eve.clientX -x;	
+				document.onmousemove=function(ev){
+					var eve= ev||event;
+					x = eve.clientX - disX;
+					//调用
+					move();
+					
+					//设定速度
+					iSpeed =x-lastX;
+					lastX =x;
+					
+				}
+				document.onmouseup=function(){
+					document.onmousemove=document.onmouseup=null;
+					timer=setInterval(function(){
+						x+=iSpeed;
+						//调用
+						move();
+					},30);
+				}
+				return false;
+			}
+			
+			function move(){
+				//判断速度
+				iSpeed<0?iSpeed++:iSpeed--;
+				if(iSpeed==0){
+					clearInterval(timer);
+				}
+				var l=parseInt(x/8);
+				if(l>=0){
+					l=76-(l%77);
+				}else{
+					l=-Math.floor((l/77)*77)%77;
+				}
+				//方法一:耗资源
+				//oImg.src='img/img('+l+').jpg';
+				//this.title=l+'/'+iSpeed;
+				//方法二
+				if(oldImg != aImg[l]){
+					oldImg.style.display='none';
+					aImg[l].style.display='block';
+					oldImg = aImg[l];
+				}
+			}
+			
+			
+		};
+	</script>
+	<body>
+		<img src="img/img(0).jpg"/>; 
+	</body>
+</html>

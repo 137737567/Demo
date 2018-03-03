@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>js练习</title>
+	</head>
+	<style type="text/css">
+		p{display: inline;font-size: 13px;}
+		li{list-style: none;padding-top: 20px;}
+		input{width: 40px;height: 30px;}
+		#btn{height: 30px; width: 70px;background: orange;}
+		#draw{height: 100px; width: 100px;border: 2px solid black;background: green;margin: 50px;}
+		#btn4,#btn5,#btn6,#btn7,#btn8,#btn9{background:ghostwhite;color: grey;}
+		#btn10,#btn11{background:darkblue;width: 70px;height: 30px;margin-left:20px ;}
+		#top{position:absolute;top:0;height: 100%; width: 100%;background:black;opacity:0.2;display: none;}
+		#main{border: 20px gainsboro solid; width: 300px; height: 250px;margin-left: 35%;margin-top: 80px;
+		float: left;display: none;position: absolute;background: gray;}
+		
+	</style>
+	<script>
+		window.onload=function(){
+			var target =document.getElementById('draw')
+			var btn=document.getElementById('btn');
+			var btn1=document.getElementById('btn1');
+			var btn2=document.getElementById('btn2');
+			var btn3=document.getElementById('btn3');
+			var btn4=document.getElementById('btn4');
+			var btn5=document.getElementById('btn5');
+			var btn6=document.getElementById('btn6');
+			var btn7=document.getElementById('btn7');
+			var btn8=document.getElementById('btn8');
+			var btn9=document.getElementById('btn9');
+			var btn10=document.getElementById('btn10');
+			var btn11=document.getElementById('btn11');
+			
+			btn.onclick=function(){
+				document.getElementById('top').style.display='block';
+				document.getElementById('main').style.display='block';		
+			}
+			btn11.onclick=function(){
+				document.getElementById('top').style.display='none';
+				document.getElementById('main').style.display='none';	
+			}
+			
+			btn1.onclick=function(){
+				target.style.background='red';
+			}
+			btn2.onclick=function(){
+				target.style.background='yellow';
+			}
+			btn3.onclick=function(){
+				target.style.background='blue';
+			}
+			
+			btn4.onclick=function(){
+				target.style.height='200px';
+			}
+			btn5.onclick=function(){
+				target.style.height='300px';
+			}
+			btn6.onclick=function(){
+				target.style.height='400px';
+			}
+			
+			btn7.onclick=function(){
+				target.style.width='200px';
+			}
+			btn8.onclick=function(){
+				target.style.width='300px';
+			}
+			btn9.onclick=function(){
+				target.style.width='400px';
+			}
+			
+			btn10.onclick=function(){
+				target.style.width='100px';
+				target.style.height='100px';
+				target.style.background='green';
+			}
+			
+			
+			
+		}
+	</script>
+	<body>
+		<div>
+			<p>
+				请为下面的DIV设置样式：
+			</p>
+			<input id="btn" type="button" value="点击设置"/>
+		</div>
+		<div id="top"></div>
+		<div id="main">
+				<ul>
+					<li>
+						<p>请选择背景色：</p>
+						<input id="btn1" type="button" style="background: red;" value="红"/>
+						<input id="btn2" type="button" style="background: yellow;" value="黄"/>
+						<input id="btn3" type="button" style="background: blue;" value="蓝"/>
+					</li>
+					<li>
+						<p>请选择高(px)：</p>
+						<input id="btn4" type="button" value="200"/>
+						<input id="btn5" type="button" value="300"/>
+						<input id="btn6" type="button" value="400"/>
+					</li>
+					<li>
+						<p>请选择宽(px)：</p>
+						<input id="btn7" type="button" value="200"/>
+						<input id="btn8" type="button" value="300"/>
+						<input id="btn9" type="button" value="400"/>
+					</li>
+					<li>
+						<input id="btn10" type="button" value="还原"/>
+						<input id="btn11" type="button" value="确认"/>
+					</li>
+				</ul>
+			</div>
+		<div id="draw">
+			
+		</div>
+	</body>
+</html>

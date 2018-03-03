@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		/*border-radius是向元素添加圆角边框*/
+		.half_circle{background: greenyellow;border-radius: 50px 50px 0 0;height: 50px;width:100px;}
+		.circle{background: greenyellow;border-radius: 50px;height: 100px;width:100px;}
+		
+		/*box-shadow: X轴偏移量 Y轴偏移量 [阴影模糊半径] [阴影扩展半径] [阴影颜色] [投影方式];
+			投影方式:inset为内投影,双重投影逗号隔开
+			注: 阴影模糊半径：此参数可选，其值只能是为正值，如果其值为0时，表示阴影不具有模糊效果，其值越大阴影的边缘就越模糊；
+				阴影扩展半径：此参数可选，其值可以是正负值，如果值为正，则整个阴影都延展扩大，反之值为负值时，则缩小；
+		*/
+		.shadow{height: 100px;width:100px;box-shadow: -4px 2px 6px #666,-4px 2px 6px #666 inset;}
+		
+		/*border-image:url(图片路径) 切割宽度(不加px)  延伸方式;
+		 	延伸方式:round平铺  repeat重复  stretch拉伸
+		*/
+		.border_image{
+			height: 100px;
+			width: 100px;
+			border: 10px solid gray;
+			border-image:url(http://img.mukewang.com/52e22a1c0001406e03040221.jpg) 10 repeat;
+		}
+		
+		/*color:rgba(R,G,B,A)
+			R、G、B取值范围为：0 - 255。A为透明度参数，取值在0~1之间;
+		*/
+		.border_image{
+			background-color: rgba(100,100,100,0.3);
+		}
+		
+		/*颜色渐变: 分为线性渐变(linear-gradient)和径向渐变(radial-gradient)
+			linear-gradient(渐变方向,起始颜色,结束颜色.....可多个) 
+		*/
+		.linear_gradient{
+			height: 100px;
+			width: 300px;
+			background-image: linear-gradient(to right,blue,red,pink,gray) ;
+		}
+		
+		/*文字溢出:text-overflow:clip(剪切)|ellipse(省略号);
+		 	注:ellipse必须配合overflow:hidden(移除内容隐藏)
+		 		white-space:nowrap(强制文本在一行内显示)使用 ;
+		    超过边界是否断开转行:word-wrap:normal(允许的断字点换行)|break-word(在长单词或 URL地址内部进行换行);
+		*/
+		.text{
+			height: 50px;
+			width: 300px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+		
+		/*@font-face能够加载服务器端的字体文件，设置之后，就可以像使用普通字体一样在（font-*）中设置字体样式。*/
+		@font-face {
+			font-family:"My Font";
+			src: url("http://www.imooc.com/Amaranth-BoldItalic.otf");
+		}
+		.text{
+			font-family: "My Font";
+		}
+		
+		/*字体阴影text-shadow: X-Offset(水平偏移距离) Y-Offset(垂直偏移距离) blur(模糊程度) color;*/
+		.text{
+			text-shadow: 1px 1px 1px red;
+		}
+		
+		/*背景图起始位置:[背景必须是no-repeat]
+			background-origin ： border-box(从边框) | padding-box（内边距[默认值]） | content-box(内容区域); */
+		.background_origin{
+			height: 200px;
+			width: 200px;
+			border:10px black dashed;
+			padding: 20px;
+			background:#ccc url("http://img.mukewang.com/52b4113500018cf102000200.jpg") no-repeat;
+			background-origin: content-box;
+		}
+		
+		/*背景剪裁(向外)
+			background-clip ： border-box(边框[默认值]) | padding-box(内填充) | content-box(内容区) | no-clip(不裁切)*/
+		.background_clip{
+			height: 200px;
+			width: 200px;
+			border:10px black dashed;
+			padding: 20px;
+			background:#ccc url("http://img.mukewang.com/52b4113500018cf102000200.jpg") no-repeat;
+			background-origin: border-box;
+			background-clip: content-box;
+		}
+		
+		/*图片大小
+			background-size: auto | <长度值> | <百分比> | cover | contain
+			1、auto：默认值，不改变背景图片的原始高度和宽度；
+			2、<长度值>：成对出现如200px 50px，将背景图片宽高依次设置为前面两个值，当设置一个值时，将其作为图片宽度值来等比缩放；
+			3、<百分比>：0％~100％之间的任何值，将背景图片宽高依次设置为所在元素宽高乘以前面百分比得出的数值，当设置一个值时同上;
+			4、cover：顾名思义为覆盖，即将背景图片等比缩放以填满整个容器；
+			5、contain：容纳，即将背景图片等比缩放至某一边紧贴容器边缘为止。*/
+		
+		/*多重背景*/
+		.backgrounds{
+			height: 100px;
+			width: 300px;
+			background-image: url(http://img.mukewang.com/54cf2365000140e600740095.jpg),
+                  url(http://img.mukewang.com/54cf238a0001728d00740095.jpg),
+                  url(http://img.mukewang.com/54cf23b60001fd9700740096.jpg);
+    		background-position: left top, 100px 0, 200px 0;
+    		background-repeat: no-repeat,no-repeat,no-repeat;
+		}
+		
+		/*属性选择器
+			E[attr^/$/*="val"]:E元素的attr属性开头/结尾/包含(是)val的;
+		*/
+		a[href$="pdf"]{
+			background: red;
+		}
+		a[class^="icon"]{
+			background: green;
+		}
+		a[title*="title"]{
+			background: pink;
+		}
+		
+		/*结构性伪类选择器:
+			1.[:root]是根选择器，意思是匹配元素E所在文档的根元素。在HTML文档中，根元素始终是<html>。
+				:root{} = html{} 
+			2.[:not]是否定选择器，和jQuery中的:not选择器一模一样，可以选择除某个元素之外的所有元素。
+				设置表单中submit以外元素:input:not([type="submit"]){};
+			3.[:empty]选择没有任何内容的元素,空格也不能有;	
+			4.[:target]称为目标选择器，用来匹配文档的url的某个标志符的目标元素。标识符:<a href="#id">;
+		*/
+		#brand:target{
+			background: pink;
+		}
+		/*  5.[:first/last-child]选择器表示的是选择父元素的第一个/最后一个子元素的元素。*/
+		ol>li:first-child{
+			color: red;
+		}
+		/*	6.[:nth-child(n)]选择器用来定位某个父元素的一个或多个特定的子元素。(n为0时不起作用)
+				参数n可以是具体多个数,也可以是表达式"2n+1"(此时n从0开始),也可以是参数"odd"奇/"even"偶;
+			7.[nth-last-child(n)]和上面相同,只不过从最后一个开始;
+		*/
+		ol>li:nth-child(2n+1){
+			background: pink;
+		}
+		/*	8.[:first/last-of-type]类似于“:first/last-child”选择器，不同之处就是指定了元素的类型;
+			9.[:nth-of-type(n)]类似于“:nth-child(n)”选择器，不同的是只计算父元素中指定的某种类型的子元素。 
+			10.[:nth-last-of-type(n)]和上面一样，但它的起始方向是从最后一个子元素开始;
+			11.[:only-child]选择的是父元素中只有一个子元素，而且只有唯一的一个子元素;
+			12.[:only-of-type]表示一个元素他有很多个子元素，而其中只有一种类型的子元素是唯一的;
+			13.[:enabled]/[:disabled]选择可用状态元素和不可用状态元素;
+			14.[:checked]表示的是选中状态的元素(单选复选按钮);
+			15.[::selection]伪元素是用来匹配鼠标选择突出显示的文本(不过在Firefox浏览器还需要添加前缀);
+		*/
+		.text::selection{
+			background: orange;
+			color: white;
+		}
+		/*	16.[:read-only]/[:read-write]用来选择处于只读/非只读状态元素的样式*/
+		
+		/*变形transform:
+			1.旋转 rotate() 通过指定的角度参数使元素相对原点进行旋转;正值:顺时针旋转；负值:逆时针旋转;
+			2.倾斜 skew() 函数能够让元素倾斜显示,只会改变元素的形状;
+			3.缩放 scale(x,y) 参数为缩放倍数; 
+			4.位移 translate() 可以把元素从原来的位置移动，而不影响在X、Y轴上的任何Web组件;
+			5.矩阵 matrix(a,b,c,d,e,f) a水平伸缩量 b纵向扭曲 c横向扭曲 d垂直伸缩量 e水平偏移量 f垂直偏移量;
+			6.原点 transform-origin: 左上（0,0），右上（100% 0%），左下（0% 100%），右下（100% 100%），中心（50% 50%）;
+		*/
+		
+		/*曲线阴影*/
+		.radius_shadow{
+			background: white;
+			position: relative;
+			line-height: 200px;
+			text-align: center;
+			font-size: 20px;
+			margin: 0 auto;
+			width: 600px;
+			height: 200px;
+			box-shadow: 1px 1px 4px rgba(0,0,0,0.3),0px 0px 50px rgba(0,0,0,0.1) inset;
+			-o-box-shadow: 1px 1px 4px rgba(0,0,0,0.3),0px 0px 50px rgba(0,0,0,0.1) inset;
+			-moz-box-shadow: 1px 1px 4px rgba(0,0,0,0.3),0px 0px 50px rgba(0,0,0,0.1) inset;
+			-webkit-box-shadow: 1px 1px 4px rgba(0,0,0,0.3),0px 0px 50px rgba(0,0,0,0.1) inset;
+		}
+		.radius_shadow:before,.radius_shadow:after{/*双重阴影增加深度*/
+			content: "";
+			position: absolute;
+			z-index: -1;
+			top: 50%; /*四属性缺一不可*/
+			left: 10px;
+			right: 10px;
+			bottom: 0px;
+			border-radius: 100px/10px;/*表示水平弧度和水质弧度*/
+			box-shadow: 1px 1px 20px rgba(0,0,0,0.3);
+			-o-box-shadow: 1px 1px 20px rgba(0,0,0,0.3);/*兼容性*/
+			-webkit-box-shadow: 1px 1px 20px rgba(0,0,0,0.3);
+			-moz-box-shadow: 1px 1px 20px rgba(0,0,0,0.3);
+		}
+		/*翘边阴影*/
+		.warped_shadow{
+			list-style: none;
+			width: 800px;
+			height: 250px;
+			margin: 20px auto;
+		}
+		.warped_shadow li{
+			position: relative;
+			background: white;
+			float: left;
+			width: 200px;
+			height: 200px;
+			margin-left: 40px;
+			padding: 10px;
+			box-shadow: 1px 1px 4px rgba(0,0,0,0.3),0px 0px 50px rgba(0,0,0,0.1) inset;
+			-o-box-shadow: 1px 1px 4px rgba(0,0,0,0.3),0px 0px 50px rgba(0,0,0,0.1) inset;
+			-moz-box-shadow: 1px 1px 4px rgba(0,0,0,0.3),0px 0px 50px rgba(0,0,0,0.1) inset;
+			-webkit-box-shadow: 1px 1px 4px rgba(0,0,0,0.3),0px 0px 50px rgba(0,0,0,0.1) inset;
+		}
+		.warped_shadow li:after{
+			content: "";
+			position: absolute;
+			z-index: -1;
+			height: 85%;
+			width: 80%;
+			left: 30px;
+			bottom: 6px;
+			box-shadow: 0px 2px 25px rgba(0,0,0,0.5);
+			-o-transform:skew(-12deg) rotate(-4deg);
+			-ms-transform:skew(-12deg) rotate(-4deg);
+			-webkit-transform:skew(-12deg) rotate(-4deg);
+			-moz-transform:skew(-12deg) rotate(-4deg);
+		}.warped_shadow li:before{
+			content: "";
+			position: absolute;
+			z-index: -1;	
+			height: 85%;
+			width: 80%;
+			left: 14px;
+			bottom: 6px;
+			box-shadow: 0px 2px 25px rgba(0,0,0,0.5);
+			-o-transform:skew(12deg) rotate(4deg);
+			-ms-transform:skew(12deg) rotate(4deg);
+			-webkit-transform:skew(12deg) rotate(4deg);
+			-moz-transform:skew(12deg) rotate(4deg);
+		}
+	
+		
+		/*动画:通过鼠标的单击、获得焦点，被点击或对元素任何改变中触发，并平滑地以动画效果改变CSS的属性值;
+		 	在CSS中创建简单的过渡效果可以从以下几个步骤来实现：
+				第一，在默认样式中声明元素的初始状态样式；
+				第二，声明过渡元素最终状态样式，比如悬浮状态；
+				第三，在默认样式中通过添加过渡函数，添加一些不同的样式。
+		 	1.transition-property:指定过渡或动态模拟的CSS属性(必须能产生动画效果的);
+		 		属性设置为all时，表示的是所有中点值的属性(当然只包含改变的属性)。
+			2.transition-duration:指定完成过渡所需的时间;
+				.5s=0.5s
+			3.transition-timing-function:指定过渡函数;
+				linear  规定以相同速度开始至结束的过渡效果
+				ease	规定慢速开始，然后变快，然后慢速结束的过渡效果
+				ease-in	规定以慢速开始的过渡效果
+				ease-out	规定以慢速结束的过渡效果
+				ease-in-out	规定以慢速开始和结束的过渡效果
+			4.transition-delay:指定开始出现的延迟时间;
+		注:各自可以有各自不同的延续时间和其时间的速率变换方式
+		例如：a{ transition: background 0.8s ease-in 0.3,color 0.6s ease-out 0.3;};
+		*/
+		.transition{
+			background-color: gray;
+			width:100px;
+			height: 100px;
+			transition: background-color 1s linear .5s; 
+			transition: border-radius 2s ease 1s;
+			transition: all 1s ease .5s;
+			 
+		}
+		.transition:hover{
+			width: 350px;
+			height: 250px;
+			background: cornflowerblue;
+			border-radius: 30px;
+		}
+		
+		/*动画animation
+		 	关键帧:@Keyframes 动画名称{from{} 20%{} 50%{} to{}};
+				animation-name用来调用 @keyframes定义好的动画(不需要触发)
+					注:在 Chrome 和 Safari 上面的基础上加上-webkit-前缀，Firefox加上-moz-!
+				animation-duration用来设置CSS3动画0%~100%播放时间,0则无效果
+				animation-timing-function属性主要用来设置动画播放速率
+				animation-delay用于定义在开始执行动画之前等待的时间
+				animation-iteration-count属性主要用来定义动画的播放次数,infinite循环播放
+					注:Chrome或Safari浏览器，需要加入-webkit-前缀！
+				animation-direction属性主要用来设置动画播放方向
+					1、normal是默认值，如果设置为normal时，动画的每次循环都是向前播放;
+					2、alternate，播放在第奇数次向前播放，第偶数次向反方向播放;
+				animation-play-state属性主要用来控制元素动画的播放状态
+					1.running(默认值)播放动画,也可以将暂停的动画重新播放,而且从暂停的那个位置开始播放;
+					2.paused暂停动画;
+				animation-fill-mode属性定义在动画开始之前和结束之后发生的操作
+					none: 初始状态、动画第一帧、动画最后一帧、初始状态；
+					forwards:初始状态、动画第一帧、动画最后一帧；
+					backwards:动画第一帧、动画最后一帧、初始状态；
+					both:动画第一帧、动画最后一帧；
+		*/
+		.key_frames{
+			background-color: salmon;
+			width:100px;
+			height: 100px;
+			animation: effect 5s ease .1s infinite normal paused forwards;
+		}
+		@keyframes effect{
+			from{
+				background-color: green;
+				width:100px;
+				height: 100px;
+			}
+			20%{
+				background-color: pink;
+				width:150px;
+				height: 150px;
+				border-radius: 20px;
+			}
+			60%{
+				background-color: gold;
+				width:200px;
+				height: 200px;
+			}
+			80%{
+				background-color: darkmagenta;
+				width:150px;
+				height: 150px;
+				border-radius: 10px;
+			}
+			to{
+				background-color: blue;
+				width:100px;
+				height: 100px;
+			}
+		}
+		.key_frames:hover{
+			animation-play-state: running;
+		}
+		
+		/*多列布局——Columns主要应用在文本的多列布局方面columns:width || count;
+			列宽column-width: auto | <length>;
+			列数量column-count：auto | <integer>;
+			列间距column-gap normal || length;
+			列边框column-rule:<column-rule-width>|<column-rule-style>|<column-rule-color>;
+			跨列column-span: none | all;
+		*/
+		.columns{
+			columns: auto 3;
+			column-gap: 3em;
+			column-rule: 1px solid gray;
+		}
+		.columns h2{
+			column-span: all;
+			text-align: center;
+		}
+		
+		/*在CSS中盒模型被分为两种，第一种是w3c的标准模型，另一种是IE的传统模型
+		    在自适应布局当中，在元素基础上添加内距padding，按照标准盒模型解析，往往会将布局撑破，但使用box-sizing的border-box值，可以让你轻松完成
+			box-sizing：content-box标准盒模型 | border-box传统盒模型 | inherit继承父元素
+		*/
+		.content-box{
+	        box-sizing:content-box;
+	        -moz-box-sizing:content-box;
+	        width: 100px;
+	        height: 100px;
+	        padding: 20px;
+	        border: 5px solid #E6A43F;
+	        background: blue;
+	    }
+	    .border-box{
+	        box-sizing:border-box;
+	        -moz-box-sizing:border-box;
+	        width: 100px;
+	        height: 100px;
+	        padding: 20px;
+	        border: 5px solid #3DA3EF;
+	        background: yellow;
+	    }
+	    
+	    /*伸缩布局盒模型:Flexbox布局 详解:https://www.cnblogs.com/fxycm/p/4649648.html
+	    	1.display:flex | inline-flex  
+			　　flex:设置为块级伸缩容器;
+			　　inline-flex:设置为内联级伸缩容器(内容撑大);
+	    	2.flex-flow:flex-direction || flex-wrap(默认值是row nowrap);
+		    	放置方向flex-direction:row左→右 | row-reverse右→左 | column上→下 | column-reverse下→上;
+		    	换行flex-wrap:nowrap不换行比例缩放(默认) | wrap换行 | wrap-reverse向上换行;
+			3.主轴对齐方式justify-content:flex-start向主轴开始位置 | flex-end向主轴结束位置 | center中间 | 
+			space-between平均分多余空间(1st前和end后不分) | space-around平均分多余空间(1st前和end后只分其他位置的一半)
+			4.侧轴对齐方式align-items:flex-start向侧轴开始位置  | flex-end向侧轴开始位置  | center垂直居中 |
+			baseline(不懂) | stretch伸缩项目往侧轴方向拉伸以占用额外空间?
+			5.多行侧轴对齐方式align-content:stretch垂直拉伸填充(默认)|flex-start开始位置 | flex-end结束位置 | center居中 | 
+			space-between平均分行间多余空间 | space-around平均分行间多余空间(1st前和end后只分其他位置的一半)  
+				注:项目占多行时在侧轴方向的对齐属性，这个属性将对每一行起作用而不是每个伸缩项目。
+　　			6.项目排序order:<number>;按照order值大小排列
+			7.fflex: none | [<flex-grow> <flex-shrink>? || <flex-basis>];第二个和第三个参数是可选值。默认值是0 1 auto
+				扩大比例flex-grow:<number>;把空间按比例分配;
+				缩小比例flex-shrink:<number>;
+				分配剩余空间之前默认尺寸flex-basis:<length> | autoFlex;
+			8.用来在单独的伸缩项目上覆写默认的对齐方式。
+				align-self:auto | flex-start | flex-end | center | baseline | stretch (值与align-items一样)
+	    */
+	   
+	   /*媒体类型media queries
+	     	引用方法:link方法:<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	    			@import方法:@importurl(reset.css) screen;  
+	    						<style type="text/css">@importurl(style.css) all;</sty le>
+	   				@media方法:@media screen {....}
+								<style type="text/css">@media screen {....}</sty le>
+			使用方法:@media 媒体类型and (媒体特性attr:val)[and(媒体特性attr:val)...]{你的样式}
+						1. 最大/小宽度max/min-width
+						2.多个媒体特性使用:媒体特性用and连接
+						3.设备屏幕的输出宽度Device Width
+							例:<link rel="stylesheet" media="screen and (max-device-width:480px)" href="iphone.css" />
+								指的是“iphone.css”样式适用于最大设备宽度为480px，比如说iPhone上的显示，这里的“max-device-width”所指的是设备的实际分辨率
+	    				4.only关键词用来指定某种特定的媒体类型，可以用来排除不支持媒体查询的浏览器。
+	    */
+	   
+	   /*自由缩放属性[注:需要设置overflow属性]
+	    	resize: none禁止 | both宽高 | horizontal仅宽 | vertical仅高 | inherit进程父级*/
+	   .resize{
+	   		width: 100px;
+	    	height: 100px;
+	    	border: 1px solid black;
+	    	overflow: hidden;
+	    	resize: both;
+	   }
+	   
+	   /*外轮廓outline:外轮廓线不占用网页布局空间，不一定是矩形，外轮廓是属于一种动态样式，只有元素获取到焦点或者被激活时呈现。
+	    	outline: ［color］ || [style] || [width] || [offset]偏移值 || inherit继承父级;
+	    */
+	   	.outline{
+	   		width: 200px;
+	    	height: 25px;
+			padding: 20px;
+			margin: 30px;
+			outline: red solid 2px;
+		 	border: 2px solid green;
+		}
+		
+		
+		/*3D旋转*/
+		#container{
+			width: 1024px;
+			margin: 0 auto;
+			font-size: 12px;
+		}
+		.wrapper{
+			display: inline-block;
+			vertical-align: top;
+			float: left;
+			margin:30px 50px ;
+			width: 180px;
+			height: 121px;
+			position: relative;
+			perspective: 4000px;
+		}
+		.item{
+			transform-style: preserve-3d;
+			transition: transform .6s;
+		}
+		.item:hover{
+			transform: translateZ(-50px) rotateX(90deg);
+		}
+		.information{
+			display: block;
+			position: absolute;
+			top: 0;
+			height: 100px;
+			width: 180px;
+		    transform: rotateX(-90deg) translateZ(50px);
+		    transition: all .6s;
+		    background: linear-gradient(to bottom,  rgba(236,241,244,1) 0%,rgba(190,202,217,1) 100%);
+		}
+		.information strong{
+			display: block;
+			font-size:18px ;
+		}
+		.item img{
+			display: block;
+			position: absolute;
+			top: 0;
+			transform: translateZ(50px);
+   			transition: all .6s;
+		}
+		
+	
+		
+	</style>
+	<body>
+		<div class="half_circle"></div>
+		<div class="circle"></div>
+		<div class="shadow"></div>
+		<div class="border_image"></div>
+		<div class="linear_gradient"></div>
+		<div class="text">
+			我说道：“爸爸，你走吧。”他望车外看了看，说：“我买几个橘子去。你就在此地，不要走动。”
+		</div>
+		<div class="background_origin"></div>
+		<div class="background_clip"></div>
+		<div class="backgrounds"></div>
+		<a href="xxx.pdf">我链接的是PDF文件</a>
+		<a href="#" class="icon">我类名是icon</a>
+		<a href="#" title="我的title是more">我的title是more</a>
+		<h2><a href="#brand">Brand</a></h2>
+		<div class="menuSection" id="brand">
+		  content for Brand
+		</div>
+		<ol>
+		  <li><a href="##">Link1</a></li>
+		  <li><a href="##">Link2</a></li>
+		  <li><a href="##">Link3</a></li>
+		  <li><a href="##">Link4</a></li>
+		  <li><a href="##">Link5</a></li>
+		  <li><a href="##">Link6</a></li>
+		  <li><a href="##">Link7</a></li>
+		</ol>
+		<div class="radius_shadow">
+			曲线阴影
+		</div>
+		<ul class="warped_shadow">
+			<li><img src="http://img.mukewang.com/52b4113500018cf102000200.jpg"/></li>
+			<li><img src="http://img.mukewang.com/52b4113500018cf102000200.jpg"/></li>
+			<li><img src="http://img.mukewang.com/52b4113500018cf102000200.jpg"/></li>
+		</ul>
+		<div class="transition"></div>
+		<div class="key_frames"></div>
+		<div class="columns">
+		  <h2>我要分列显示</h2>
+		  <p>为了能在Web页面中方便实现类似报纸、杂志那种多列排版的布局，W3C特意给CSS3增加了一个多列布局模块（CSS Multi Column Layout Module）。它主要应用在文本的多列布局方面。对于文本的多列布局，我想大家并不陌生，因为报纸和杂志上我们随处可见，这种布局在报纸和杂志上都使用了几十年了，但需要在Web页面上实现文本的多列布局，正如下图所示。</p>
+		  <p>为了能在Web页面中方便实现类似报纸、杂志那种多列排版的布局，W3C特意给CSS3增加了一个多列布局模块（CSS Multi Column Layout Module）。它主要应用在文本的多列布局方面。对于文本的多列布局，我想大家并不陌生，因为报纸和杂志上我们随处可见，这种布局在报纸和杂志上都使用了几十年了，但需要在Web页面上实现文本的多列布局，正如下图所示。</p>
+		  <p>为了能在Web页面中方便实现类似报纸、杂志那种多列排版的布局，W3C特意给CSS3增加了一个多列布局模块（CSS Multi Column Layout Module）。它主要应用在文本的多列布局方面。对于文本的多列布局，我想大家并不陌生，因为报纸和杂志上我们随处可见，这种布局在报纸和杂志上都使用了几十年了，但需要在Web页面上实现文本的多列布局，正如下图所示。</p>
+		</div>
+		<div class="content-box">W3C标准盒模型content-box</div>
+		<div class="border-box">IE传统盒模型border-box</div>
+	</body>
+	<div class="resize"></div>
+	<div class="outline"></div>
+	
+	<!--3D旋转-->
+	<div id="container">
+	    <h1>CSS3 3D变形制作视频展示区</h1>
+	    
+	    <div class="wrapper">
+	      <div class="item">
+	        <img src="http://pic2.qiyipic.com/image/20140415/4e/32/5f/v_105669963_m_601_180_101.jpg" />
+	        <span class="information">
+	          <strong>澳门风云</strong>闻名中外，曾担任美国赌场保安总顾问的魔术手石一坚，终回流澳门退休，更宴请各方朋友到来庆祝生日宴.
+	        </span>
+	      </div>
+	    </div>
+	    
+	    <div class="wrapper">
+	      <div class="item">
+	        <img src="http://pic4.qiyipic.com/image/20140417/b5/01/81/a_100003950_m_601_m2_180_101.jpg" />
+	        <span class="information">
+	          <strong>改过迁善</strong> 该剧讲述了金明民饰演的律师在失忆后回顾自己以往的所作所为心生忏悔，为弥补自己犯下的错误而与自己曾经工作过的律师事务所对簿公堂的故事。
+	        </span>
+	      </div>
+	    </div>
+	    
+	    <div class="wrapper">
+	      <div class="item">
+	        <img src="http://pic1.qiyipic.com/common/lego/20140521/4515581d06cc4d5b8ab320da2cf3778d.jpg" />
+	        <span class="information">
+	          <strong>父子刑警</strong> 本剧改编自雫井修介小说《Bitter Blood》。剧中，新晋刑警·佐原夏辉（佐藤健饰）被分配到银座警察
+	        </span>
+	      </div>
+	    </div>
+	    
+	    <div class="wrapper">
+	      <div class="item">
+	        <img src="http://pic5.qiyipic.com/image/20140319/7a/8d/4f/a_100003478_m_601_m1_180_101.jpg" />
+	        <span class="information">
+	          <strong>果宝特攻3</strong> 果宝特攻3,顾名思义是果宝特攻的第二部续集,已在国家广播电影电视总局备案.暂定剧情为:菠萝吹雪偶然间穿越到了古代的水果世界
+	        </span>
+	      </div>
+	    </div>
+	    
+	    <div class="wrapper">
+	      <div class="item">
+	        <img src="http://pic0.qiyipic.com/image/20140517/ce/e8/42/v_106167752_m_601_180_101.jpg" />
+	        <span class="information">
+	          <strong>红眼</strong>1988年7月16日，从汉城始发的列车发生了一起严重的交通事故，造成100多人死亡。
+	        </span>
+	      </div>
+	    </div>
+	    
+	    <div class="wrapper">
+	      <div class="item">
+	        <img src="http://pic6.qiyipic.com/image/20140303/da/e9/aa/v_105073913_m_601_180_101.jpg" />
+	        <span class="information">
+	          <strong>熊出没之夺宝熊兵</strong>一场漆黑雨夜的意外事故，一段笑料十足的误打误撞，将两个外表相似却内容各异的箱子调换。
+	        </span>
+	      </div>
+	    </div>
+	  </div> 
+</html>
